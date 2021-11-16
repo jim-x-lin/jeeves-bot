@@ -1,0 +1,42 @@
+{
+  "name": "jeeves-bot",
+  "version": "1.0.0",
+  "description": "Discord bot for OPPEG guild",
+  "main": "index.ts",
+  "scripts": {
+    "prepare": "husky install",
+    "db:migration": "npx knex migrate:make",
+    "db:migrate": "npx knex migrate:latest",
+    "db:rollback": "npx knex migrate:rollback",
+    "format": "npx prettier --write .",
+    "lint": "npx eslint --fix .",
+    "test": "npx jest",
+    "start": "node src/index.js"
+  },
+  "author": "Jamal Lamar",
+  "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "dotenv": "^10.0.0",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^25.2.4",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "knex": "^0.95.14",
+    "lint-staged": "^12.0.2",
+    "prettier": "2.4.1"
+  },
+  "dependencies": {
+    "discord.js": "^13.3.1",
+    "pg": "^8.7.1"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{md,json,js}": "prettier --write"
+  }
+}
