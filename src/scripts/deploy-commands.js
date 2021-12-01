@@ -1,4 +1,4 @@
-// run `node deploy-commands.js` on the server to register commands with Discord
+// Register commands with Discord
 
 const fs = require("fs");
 const { REST } = require("@discordjs/rest");

@@ -1,20 +1,29 @@
-// const connectData = require("../DataProvider");
-// const Config = require("./Config");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { getAllUsers } = require("../users");
+const AsciiTable = require("ascii-table");
+const { Discord } = require("../config");
 
-// const foo = async (client) => {
-//     const guild = client.guilds.cache.get(Config.Discord.guildId);
-//     const members = guild.members.list()
-
-//     const knex = await connectData();
-//     const users = await knex("users").select(["discord_id", "initials"])
-// }
+const createInitialsTable = async (client) => {
+  const guild = client.guilds.cache.get(Discord.guildId);
+  const members = guild.members.list();
+  const users = await getAllUsers();
+  const table = new AsciiTable("Members").setHeading("name", "initials");
+  members.forEach((member) => {
+    const user = users.filter((user) => user.discordId === member.id);
+    table.addRow(member.displayName, user.initials);
+  });
+  return `\`\`\`${table.toString()}\`\`\``;
+};
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("initials")
     .setDescription("Initials of server members"),
   async execute(interaction) {
-    await interaction.reply("Pong!");
+    const table = await createInitialsTable(interaction.client);
+    interaction
+      .reply(table)
+      .then(() => console.log("Reply sent."))
+      .catch(console.error);
   },
 };

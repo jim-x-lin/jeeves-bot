@@ -5,9 +5,6 @@
   "main": "index.ts",
   "scripts": {
     "prepare": "husky install",
-    "db:migration": "npx knex migrate:make",
-    "db:migrate": "npx knex migrate:latest",
-    "db:rollback": "npx knex migrate:rollback",
     "format": "npx prettier --write .",
     "lint": "npx eslint --fix .",
     "test": "npx jest",
@@ -32,10 +29,10 @@
   },
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",
+    "ascii-table": "^0.0.9",
     "discord-api-types": "^0.24.0",
     "discord.js": "^13.3.1",
-    "knex": "^0.95.14",
-    "pg": "^8.7.1"
+    "redis": "^4.0.0"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
