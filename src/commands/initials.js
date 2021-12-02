@@ -22,7 +22,7 @@ module.exports = {
   async execute(interaction) {
     const table = await createInitialsTable(interaction.client);
     interaction
-      .reply(table)
+      .reply({ content: table, ephemeral: true })
       .then(() => console.log("Reply sent."))
       .catch(console.error);
   },
