@@ -43,9 +43,9 @@ module.exports = {
       const user = await getUser(userId);
       restoreNickname(member, user);
     } else {
-      createUser(member);
-      saveInitials(member);
-      createBalance(member);
+      await createUser(member);
+      await saveInitials(member);
+      await createBalance(member);
     }
   },
 };
