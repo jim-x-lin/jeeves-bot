@@ -1,10 +1,10 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { getAllUsers } = require("../users");
 const AsciiTable = require("ascii-table");
-const { Discord } = require("../config");
+const { DiscordConfig } = require("../config");
 
 const createInitialsTable = async (client) => {
-  const guild = client.guilds.cache.get(Discord.guildId);
+  const guild = client.guilds.cache.get(DiscordConfig.guildId);
   const members = guild.members.list();
   const users = await getAllUsers();
   const table = new AsciiTable("Members").setHeading("name", "initials");

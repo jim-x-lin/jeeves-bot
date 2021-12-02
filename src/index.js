@@ -1,5 +1,5 @@
 const fs = require("fs");
-const Config = require("./Config");
+const { DiscordConfig } = require("./config");
 const { Client, Collection, Intents } = require("discord.js");
 
 /**************
@@ -48,4 +48,4 @@ for (const file of eventFiles) {
  * Authenticate *
  ****************/
 
-client.login(Config.Discord.token);
+client.login(DiscordConfig.token);
