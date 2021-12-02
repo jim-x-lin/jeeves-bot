@@ -1,6 +1,5 @@
-const redis = require("../database");
 const ECONOMY = require("../constants");
-const { getUser, createUser, updateUser } = require("../users");
+const { getUserId, getUser, createUser, updateUser } = require("../users");
 
 const cleanInitials = (str) => {
   const tmp = str.replace(/[^a-zA-Z]/g, "");
@@ -35,7 +34,7 @@ module.exports = {
   name: "guildMemberAdd",
   once: false,
   async execute(member) {
-    const userId = await redis.hGet("users", member.id);
+    const userId = await getUserId(member.id);
     await member.send(
       `Welcome${userId ? " back " : " "}to the ${member.guild.name} server!`
     );

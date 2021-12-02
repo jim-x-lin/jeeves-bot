@@ -1,5 +1,9 @@
 const redis = require("./database");
 
+const getUserId = async (discordId) => {
+  return redis.hGet("users", discordId);
+};
+
 const getUser = async (userId) => {
   return redis.hGetAll(`user:${userId}`);
 };
@@ -11,6 +15,7 @@ const getAllUsers = async () => {
 
 const createUser = async (member) => {
   const userId = await redis.get("next_user_id");
+  if (!userId) redis.set("next_user_id", "1");
   await redis.hSet(`user:${userId}`, {
     discord_id: member.id,
     nickname: member.nickname,
@@ -40,6 +45,7 @@ const updateUser = async (member, options = {}) => {
 };
 
 module.exports = {
+  getUserId,
   getUser,
   getAllUsers,
   createUser,
