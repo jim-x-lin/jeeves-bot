@@ -1,3 +1,4 @@
+const { logger } = require("../logger");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
   async execute(interaction) {
     await interaction
       .reply({ content: "Pong!", ephemeral: true })
-      .then(() => console.log("Reply sent."))
-      .catch(console.error);
+      .then(() => logger.info("Replied to command ping"))
+      .catch((err) => logger.error(err.stack, "Error running command"));
   },
 };
