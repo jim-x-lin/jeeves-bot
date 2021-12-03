@@ -8,4 +8,6 @@ const connect = async () => {
   return client;
 };
 
-module.exports = connect;
+module.exports = {
+  redis: connect,
+};

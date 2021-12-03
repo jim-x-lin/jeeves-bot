@@ -1,4 +1,4 @@
-const redis = require("./database");
+const { redis } = require("./database");
 
 const getUserId = async (discordId) => {
   return redis.hGet("users", discordId);
