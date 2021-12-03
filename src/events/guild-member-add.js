@@ -1,4 +1,3 @@
-const ECONOMY = require("../constants");
 const { getUserId, getUser, createUser, updateUser } = require("../users");
 
 const cleanInitials = (str) => {
@@ -26,10 +25,6 @@ const restoreNickname = (member, user) => {
   member.setNickname(user.nickname);
 };
 
-const createBalance = async (member) => {
-  return await updateUser(member.id, { balance: ECONOMY.NEW_MEMBER_BALANCE });
-};
-
 module.exports = {
   name: "guildMemberAdd",
   once: false,
@@ -44,7 +39,6 @@ module.exports = {
     } else {
       await createUser(member);
       await saveInitials(member);
-      await createBalance(member);
     }
   },
 };

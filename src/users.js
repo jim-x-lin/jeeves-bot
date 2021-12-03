@@ -1,4 +1,5 @@
 const { redis } = require("./database");
+const { ECONOMY } = require("./constants");
 
 const getUserId = async (discordId) => {
   return redis.hGet("users", discordId);
@@ -19,6 +20,7 @@ const createUser = async (member) => {
   await redis.hSet(`user:${userId}`, {
     discord_id: member.id,
     nickname: member.nickname,
+    balance: ECONOMY.NEW_MEMBER_BALANCE,
     updated_at: Date.now().toString(),
   });
   await redis.incr("next_user_id");
