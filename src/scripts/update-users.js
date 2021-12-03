@@ -22,7 +22,13 @@ client.login(DiscordConfig.token);
 
 const guild = client.guilds.cache.get(DiscordConfig.guildId);
 const members = guild.members.list();
+console.log(
+  `Found ${members.length} members: `,
+  members.map((member) => member.displayName).join("\n")
+);
 
-populateDatabase(members);
+populateDatabase(members)
+  .then(() => console.log("Successfully populated db"))
+  .catch((err) => console.error("Error populating db: ", err.stack));
 
 client.destroy();

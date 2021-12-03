@@ -1,3 +1,4 @@
+const logger = require("../logger");
 const { redis } = require("./database");
 const { ECONOMY } = require("./constants");
 
@@ -30,7 +31,7 @@ const createUser = async (member) => {
 const updateUser = async (member, options = {}) => {
   const userId = await redis.hGet("users", member.id);
   if (!userId) {
-    console.log("User Not Found");
+    logger.info(member, "Member not in database");
     return;
   }
   if (options.initials) {

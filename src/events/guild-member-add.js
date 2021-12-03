@@ -1,3 +1,4 @@
+const logger = require("../logger");
 const { getUserId, getUser, createUser, updateUser } = require("../users");
 
 const cleanInitials = (str) => {
@@ -14,7 +15,7 @@ const saveInitials = async (member) => {
   const collected = await message.channel
     .awaitMessages({ filter, max: 1, time: 60000, errors: ["time"] })
     .catch(() => {
-      console.log("Didn't receive valid initials within 60 seconds.");
+      logger.info("Didn't receive valid initials within 60 seconds.");
       return;
     });
   const initials = cleanInitials(collected.first().content);

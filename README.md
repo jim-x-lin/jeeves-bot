@@ -2,7 +2,7 @@ Discord bot using the [discord.js](https://github.com/discordjs/discord.js) libr
 
 ## TODO
 
-- [ ] (M) set up logging
+- [ ] (M) set up log rotation
 - [ ] (M) write tests
 - [ ] (M) improve efficiency of `createInitialsTable`
 - [ ] (S) prune command to remove inactive members

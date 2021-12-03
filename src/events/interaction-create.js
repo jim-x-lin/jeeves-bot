@@ -1,3 +1,5 @@
+const { logger } = require("../logger");
+
 // listen for slash commands
 module.exports = {
   name: "interactionCreate",
@@ -9,8 +11,8 @@ module.exports = {
     if (!command) return;
     try {
       await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      logger.error(err.stack, "Error executing command");
       return interaction.reply({
         content: "There was an error while executing this command!",
         ephemeral: true,

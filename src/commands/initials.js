@@ -1,3 +1,4 @@
+const { logger } = require("../logger");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { getAllUsers } = require("../users");
 const AsciiTable = require("ascii-table");
@@ -23,7 +24,7 @@ module.exports = {
     const table = await createInitialsTable(interaction.client);
     interaction
       .reply({ content: table, ephemeral: true })
-      .then(() => console.log("Reply sent."))
-      .catch(console.error);
+      .then(() => logger.info("Replied to command initials"))
+      .catch((err) => logger.error(err.stack, "Error running command"));
   },
 };
