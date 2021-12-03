@@ -6,20 +6,25 @@ const cleanInitials = (str) => {
   return (tmp[0] + tmp[tmp.length - 1]).toUpperCase();
 };
 
-const saveInitials = async (member) => {
+const getInitials = async (member) => {
   const message = await member.send(
     "To get started, please provide your initials."
   );
   const filter = (message) =>
     /[A-Za-z]\.?\s?[A-Za-z]\.?\s?/.test(message.content);
-  const collected = await message.channel
-    .awaitMessages({ filter, max: 1, time: 60000, errors: ["time"] })
-    .catch(() => {
-      logger.info("Didn't receive valid initials within 60 seconds.");
-      return;
+
+  try {
+    const collected = await message.channel.awaitMessages({
+      filter,
+      max: 1,
+      time: 60000,
+      errors: ["time"],
     });
-  const initials = cleanInitials(collected.first().content);
-  return await updateUser(member.id, { initials: initials });
+    const initials = cleanInitials(collected.first().content);
+    await updateUser(member.id, { initials: initials });
+  } catch (err) {
+    logger.info(err, "Error getting initials");
+  }
 };
 
 const restoreNickname = (member, user) => {
@@ -39,7 +44,7 @@ module.exports = {
       restoreNickname(member, user);
     } else {
       await createUser(member);
-      await saveInitials(member);
+      await getInitials(member);
     }
   },
 };
