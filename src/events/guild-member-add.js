@@ -8,7 +8,7 @@ const cleanInitials = (str) => {
 
 const getInitials = async (member) => {
   const message = await member.send(
-    "To get started, please provide your initials."
+    `Welcome to the ${member.guild.name} server!\nTo get started, please provide your initials.`
   );
   const filter = (message) =>
     /[A-Za-z]\.?\s?[A-Za-z]\.?\s?/.test(message.content);
@@ -36,9 +36,6 @@ module.exports = {
   once: false,
   async execute(member) {
     const userId = await getUserId(member.id);
-    await member.send(
-      `Welcome${userId ? " back " : " "}to the ${member.guild.name} server!`
-    );
     if (userId) {
       const user = await getUser(userId);
       restoreNickname(member, user);
