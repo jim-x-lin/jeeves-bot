@@ -4,6 +4,6 @@ module.exports = {
   name: "guildMemberUpdate",
   once: false,
   async execute(member) {
-    updateUser(member);
+    updateUser(member.user.id, member.nickname);
   },
 };

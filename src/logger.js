@@ -1,10 +1,12 @@
+const path = require("path");
 const pino = require("pino");
 
 // this will be replaced by proper log rotation
 const destination = () => {
-  const date = Date.now();
+  const date = new Date();
   const fileName = `${date.getFullYear()}-${date.getMonth() + 1}`;
-  return `../logs/${fileName}.log`;
+  const directory = path.resolve(__dirname, "../log");
+  return `${directory}/${fileName}.log`;
 };
 
 const transport = pino.transport(
@@ -12,12 +14,12 @@ const transport = pino.transport(
     ? {
         target: "pino/file",
         level: "info",
-        options: { destination: destination() },
+        options: { destination: destination(), mkdir: true },
       }
     : {
         target: "pino-pretty",
         level: "debug",
-        options: { destination: destination() },
+        options: { destination: destination(), mkdir: true },
       }
 );
 

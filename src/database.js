@@ -2,13 +2,9 @@ const { DataConfig } = require("./config");
 const { logger } = require("./logger");
 const redis = require("redis");
 
-const connect = async () => {
-  const client = redis.createClient(DataConfig);
-  client.on("error", (err) => logger.error(err, "Redis Client Error"));
-  await client.connect();
-  return client;
-};
+const redisClient = redis.createClient(DataConfig);
+redisClient.on("error", (err) => logger.error(err, "Redis Client Error"));
 
 module.exports = {
-  redis: connect,
+  redisClient,
 };

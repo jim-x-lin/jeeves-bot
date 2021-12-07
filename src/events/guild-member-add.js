@@ -21,7 +21,7 @@ const getInitials = async (member) => {
       errors: ["time"],
     });
     const initials = cleanInitials(collected.first().content);
-    await updateUser(member.id, { initials: initials });
+    await updateUser(member.user.id, { initials: initials });
   } catch (err) {
     logger.info(err, "Error getting initials");
   }
@@ -40,7 +40,7 @@ module.exports = {
       const user = await getUser(userId);
       restoreNickname(member, user);
     } else {
-      await createUser(member);
+      await createUser(member.user.id, member.nickname);
       await getInitials(member);
     }
   },

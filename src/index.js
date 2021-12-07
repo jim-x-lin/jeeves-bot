@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const { logger } = require("./logger");
 const { DiscordConfig } = require("./config");
 const { Client, Collection, Intents } = require("discord.js");
@@ -16,14 +17,16 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 client.commands = new Collection();
 
 const commandFiles = fs
-  .readdirSync("./commands")
+  .readdirSync(path.resolve(__dirname, "./commands"))
   .filter((file) => file.endsWith(".js"));
 
 for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands
-    .set(command.data.name, command)
-    .catch((err) => logger.error(err.stack, "Error setting Discord command"));
+  const command = require(`${path.resolve(__dirname, "./commands")}/${file}`);
+  try {
+    client.commands.set(command.data.name, command);
+  } catch (err) {
+    logger.error(err.stack, "Error setting Discord command");
+  }
 }
 
 /**********
@@ -31,24 +34,16 @@ for (const file of commandFiles) {
  **********/
 
 const eventFiles = fs
-  .readdirSync("./events")
+  .readdirSync(path.resolve(__dirname, "./events"))
   .filter((file) => file.endsWith(".js"));
 
 for (const file of eventFiles) {
-  const event = require(`./events/${file}`);
+  const event = require(`${path.resolve(__dirname, "./events")}/${file}`);
   try {
     if (event.once) {
-      client.once(event.name, (...args) =>
-        event
-          .execute(...args)
-          .catch((err) => logger.error(err.stack, "Error responding to event"))
-      );
+      client.once(event.name, (...args) => event.execute(...args));
     } else {
-      client.on(event.name, (...args) =>
-        event
-          .execute(...args)
-          .catch((err) => logger.error(err.stack, "Error responding to event"))
-      );
+      client.on(event.name, (...args) => event.execute(...args));
     }
   } catch (err) {
     logger.error(err.stack, "Error registering Discord events");
