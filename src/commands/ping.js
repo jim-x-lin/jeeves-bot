@@ -8,7 +8,7 @@ module.exports = {
   async execute(interaction) {
     await interaction
       .reply({ content: "Pong!", ephemeral: true })
-      .then(() => logger.info("Replied to command ping"))
+      .then(() => logger.info("Replied to command: ping"))
       .catch((err) => logger.error(err.stack, "Error running command"));
   },
 };
