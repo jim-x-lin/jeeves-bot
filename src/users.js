@@ -1,8 +1,14 @@
 const { logger } = require("./logger");
 const { redisClient } = require("./database");
-const { ECONOMY } = require("./constants");
+const { ECONOMY, USER } = require("./constants");
 
 (async () => await redisClient.connect())();
+
+const stringifyValues = (obj) =>
+  Object.keys(obj).reduce((newObj, key) => {
+    newObj[key] = obj[key] || "";
+    return newObj;
+  }, {});
 
 const getUserId = async (discordId) => {
   return redisClient.hGet("users", discordId);
@@ -22,35 +28,29 @@ const getAllUsers = async () => {
   return users;
 };
 
-const createUser = async (discordId, nickname) => {
+const createUser = async (discordId, attributes = {}) => {
   const userId = await redisClient.get("next_user_id");
   if (!userId) redisClient.set("next_user_id", "1");
   await redisClient.hSet("users", discordId, userId);
   await redisClient.hSet(`user:${userId}`, {
-    discord_id: discordId,
-    nickname: nickname | "",
-    balance: ECONOMY.NEW_MEMBER_BALANCE,
-    updated_at: Date.now().toString(),
+    ...stringifyValues(attributes),
+    [USER.ATTRIBUTES.DISCORD_ID]: discordId,
+    [USER.ATTRIBUTES.BALANCE]: ECONOMY.NEW_MEMBER_BALANCE,
+    [USER.ATTRIBUTES.UPDATED_AT]: Date.now().toString(),
   });
   await redisClient.incr("next_user_id");
   return redisClient.hGetAll(`user:${userId}`);
 };
 
-const updateUser = async (discordId, nickname, options = {}) => {
+const updateUser = async (discordId, attributes = {}) => {
   const userId = await redisClient.hGet("users", discordId);
   if (!userId) {
-    logger.info(discordId, "Member not in database");
+    logger.error(discordId, "Member not in database");
     return;
   }
-  if (options.initials) {
-    await redisClient.hSet(`user:${userId}`, { initials: options.initials });
-  }
-  if (options.balance) {
-    await redisClient.hSet(`user:${userId}`, { balance: options.balance });
-  }
   await redisClient.hSet(`user:${userId}`, {
-    nickname: nickname || "",
-    updated_at: Date.now().toString(),
+    ...stringifyValues(attributes),
+    [USER.ATTRIBUTES.UPDATED_AT]: Date.now().toString(),
   });
   return redisClient.hGetAll(`user:${userId}`);
 };
