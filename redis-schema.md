@@ -16,14 +16,20 @@ The structure for storing user data is as follows, based on [this guide](https:/
     updated_at: "1519211809934",
     nickname: "adam aardvark",
     initials: "AA",
-    balance: "10000"
+    balance: "10000",
+    joined_at: "1519211001056",
+    last_seen_at: "1519211241511",
+    last_seen_in: "channel a",
   },
   "user:2": {
     discord_id: "defg5678",
     updated_at: "1519211217538",
     nickname: "brian bardum",
     initials: "BB",
-    balance: "10000"
+    balance: "10000",
+    joined_at: "1519210902156",
+    last_seen_at: "1519211241971",
+    last_seen_in: "channel a",
   },
   ...
   "user:50": {
@@ -32,6 +38,9 @@ The structure for storing user data is as follows, based on [this guide](https:/
     nickname: "caleb cassowary",
     initials: "CC"
     balance: "10000",
+    joined_at: "1519211002156",
+    last_seen_at: "1519211212252",
+    last_seen_in: "channel b",
   }
 }
 ```

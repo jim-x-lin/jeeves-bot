@@ -1,6 +1,7 @@
 const { DiscordConfig } = require("../config");
 const { Client, Intents } = require("discord.js");
 const { getUserId, createUser, updateUser } = require("../users");
+const { USER } = require("../constants");
 
 const getInitials = (name) => {
   if (!name) return;
@@ -13,9 +14,14 @@ const populateDatabase = async (members) => {
   for (const member of members) {
     const discordId = member[0];
     const nickname = member[1].nickname;
+    const joinedAt = member[1].joinedTimestamp;
     const userId = await getUserId(discordId);
-    if (!userId) await createUser(discordId, nickname);
-    await updateUser(discordId, nickname, { initials: getInitials(nickname) });
+    if (!userId) await createUser(discordId);
+    await updateUser(discordId, {
+      [USER.ATTRIBUTES.NICKNAME]: nickname,
+      [USER.ATTRIBUTES.INITIALS]: getInitials(nickname),
+      [USER.ATTRIBUTES.JOINED_AT]: joinedAt,
+    });
   }
 };
 

@@ -1,5 +1,6 @@
 const logger = require("../logger");
 const { getUserId, getUser, createUser, updateUser } = require("../users");
+const { USER } = require("../constants");
 
 const cleanInitials = (str) => {
   const tmp = str.replace(/[^a-zA-Z]/g, "");
@@ -8,7 +9,7 @@ const cleanInitials = (str) => {
 
 const getInitials = async (member) => {
   const message = await member.send(
-    `Welcome to the ${member.guild.name} server!\nTo get started, please provide your initials.`
+    `Welcome to the ${member.guild.name} server!\nIf possible, please provide your initials.`
   );
   const filter = (message) =>
     /[A-Za-z]\.?\s?[A-Za-z]\.?\s?/.test(message.content);
@@ -21,14 +22,14 @@ const getInitials = async (member) => {
       errors: ["time"],
     });
     const initials = cleanInitials(collected.first().content);
-    await updateUser(member.user.id, { initials: initials });
+    await updateUser(member.user.id, { [USER.ATTRIBUTES.INITIALS]: initials });
   } catch (err) {
     logger.info(err, "Error getting initials");
   }
 };
 
 const restoreNickname = (member, user) => {
-  member.setNickname(user.nickname);
+  member.setNickname(user[USER.ATTRIBUTES.NICKNAME]);
 };
 
 module.exports = {
@@ -40,7 +41,10 @@ module.exports = {
       const user = await getUser(userId);
       restoreNickname(member, user);
     } else {
-      await createUser(member.user.id, member.nickname);
+      await createUser(member.user.id, {
+        [USER.ATTRIBUTES.NICKNAME]: member.nickname,
+        [USER.ATTRIBUTES.JOINED_AT]: member.joinedTimestamp,
+      });
       await getInitials(member);
     }
   },
