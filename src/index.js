@@ -49,12 +49,26 @@ for (const file of eventFiles) {
   const event = require(`${path.resolve(__dirname, "./events")}/${file}`);
   try {
     if (event.once) {
-      client.once(event.name, (...args) => event.execute(...args));
+      client.once(event.name, (...args) => {
+        logger.info(`Event detected: ${event.name}`);
+        try {
+          event.execute(...args);
+        } catch (err) {
+          logger.error(err.stack, "Error executing event listener");
+        }
+      });
     } else {
-      client.on(event.name, (...args) => event.execute(...args));
+      client.on(event.name, (...args) => {
+        logger.info(`Event detected: ${event.name}`);
+        try {
+          event.execute(...args);
+        } catch (err) {
+          logger.error(err.stack, "Error executing event listener");
+        }
+      });
     }
   } catch (err) {
-    logger.error(err.stack, "Error registering Discord event listeners");
+    logger.error(err.stack, "Error registering event listeners");
   }
 }
 
