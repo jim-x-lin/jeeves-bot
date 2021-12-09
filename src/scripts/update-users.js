@@ -2,13 +2,7 @@ const { DiscordConfig } = require("../config");
 const { Client, Intents } = require("discord.js");
 const { getUserId, createUser, updateUser } = require("../users");
 const { USER } = require("../constants");
-
-const getInitials = (name) => {
-  if (!name) return;
-  if (!/^[a-z]+\s+[a-z]+.+$/i.test(name)) return;
-  const [first, last] = name.split(/\s+/);
-  return first[0].toUpperCase() + last[0].toUpperCase();
-};
+const { getInitials } = require("../helpers");
 
 const populateDatabase = async (members) => {
   for (const member of members) {
