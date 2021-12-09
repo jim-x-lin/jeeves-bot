@@ -51,32 +51,49 @@ const sortedList = (members, users, sortMethod = "") => {
   return list;
 };
 
-const createMembersTable = async (client, viewMethod) => {
-  const guild = client.guilds.cache.get(DiscordConfig.guildId);
-  const members = await guild.members.list({ limit: 1000 });
-  const users = await getAllUsers();
-  // only show needed columns, due to character limit
-  const table = new AsciiTable().removeBorder().setHeading(
-    "name",
-    ...{
-      nickname: ["initials"],
-      new: ["join date"],
-      sighting: ["last seen"],
-    }[viewMethod]
-  );
-  sortedList(members, users, viewMethod).forEach((row) => {
+const createMembersTable = (list, viewMethod, heading = true) => {
+  const table = new AsciiTable().removeBorder();
+  if (heading)
+    table.setHeading(
+      "name",
+      ...{
+        nickname: ["initials"],
+        new: ["join date"],
+        sighting: ["last seen", "last seen in"],
+      }[viewMethod]
+    );
+  list.forEach((row) =>
     table.addRow(
       row.name,
       ...{
         nickname: [row.initials],
         new: [row.joinDate],
-        sighting: [row.lastSeenAt],
+        sighting: [row.lastSeenAt, row.lastSeenIn],
       }[viewMethod]
-    );
-  });
-  console.log(table.toString());
-  console.log(table.toString().length);
-  return `\`\`\`\n${table.toString()}\n\`\`\``;
+    )
+  );
+  return table;
+};
+
+const createMembersTableMessages = async (client, viewMethod) => {
+  const guild = client.guilds.cache.get(DiscordConfig.guildId);
+  const members = await guild.members.list({ limit: 1000 });
+  const users = await getAllUsers();
+  const list = sortedList(members, users, viewMethod);
+  // using "pagination" to bypass 2000 character limit
+  const table1 = createMembersTable(
+    list.slice(0, Math.floor(list.length / 2)),
+    viewMethod
+  );
+  const table2 = createMembersTable(
+    list.slice(Math.floor(list.length / 2)),
+    viewMethod,
+    false
+  );
+  return [
+    `\`\`\`\n${table1.toString()}\n\`\`\``,
+    `\`\`\`\n${table2.toString()}\n\`\`\``,
+  ];
 };
 
 module.exports = {
@@ -95,13 +112,17 @@ module.exports = {
         ])
     ),
   async execute(interaction) {
-    const table = await createMembersTable(
+    const [table1, table2] = await createMembersTableMessages(
       interaction.client,
       interaction.options.getString("view")
     );
-    interaction
-      .reply({ content: table, ephemeral: true })
+    await interaction
+      .reply({ content: table1, ephemeral: true })
       .then(() => logger.info("Replied to command: members"))
+      .catch((err) => logger.error(err.stack, "Error running command"));
+    await interaction
+      .followUp({ content: table2, ephemeral: true })
+      .then(() => logger.info("Followed up to command: members"))
       .catch((err) => logger.error(err.stack, "Error running command"));
   },
 };

@@ -53,5 +53,4 @@ Necessary between deployments.
 5. run `node update-users.js` to populate the database with member data
 6. `cd` into the `src` directory
 7. run `node index.js` to run the bot
-
-- when re-deploying, stop the bot with `ctrl-c` and delete the old code with `rm -rf jeeves-bot`
+   - when re-deploying, stop the bot with `ctrl-c` and delete the old code with `rm -rf jeeves-bot`
