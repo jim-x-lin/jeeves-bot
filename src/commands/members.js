@@ -17,7 +17,9 @@ const stringToTimeAgo = (str) => {
   const ms = Number(str);
   if (!ms || ms === 0) return "";
   const date = new Date(ms);
-  return formatDistance(date, new Date(), { addSuffix: true });
+  const distanceString = formatDistance(date, new Date(), { addSuffix: true });
+  // reduce text to deal with 2000 character limit
+  return distanceString.replace(/^(less than )|(about )|(over )|(almost )/, "");
 };
 
 const sortedList = (members, users, sortMethod = "") => {
