@@ -28,13 +28,15 @@ const sortedList = (members, users, sortMethod = "") => {
       name: member.displayName,
       initials: user ? user[USER.ATTRIBUTES.INITIALS] : "",
       joinDate: user ? stringToDate(user[USER.ATTRIBUTES.JOINED_AT]) : "",
-      joinDateSortable: user ? Number(user[USER.ATTRIBUTES.JOINED_AT]) : "",
+      joinDateSortable: user
+        ? Number(user[USER.ATTRIBUTES.JOINED_AT] || "")
+        : 0,
       lastSeenAt: user
         ? stringToTimeAgo(user[USER.ATTRIBUTES.LAST_SEEN_AT])
         : "",
       lastSeenAtSortable: user
-        ? Number(user[USER.ATTRIBUTES.LAST_SEEN_AT])
-        : "",
+        ? Number(user[USER.ATTRIBUTES.LAST_SEEN_AT] || "")
+        : 0,
       lastSeenIn: user ? user[USER.ATTRIBUTES.LAST_SEEN_IN] : "",
     });
   });
@@ -72,7 +74,8 @@ const createMembersTable = async (client, viewMethod) => {
       }[viewMethod]
     );
   });
-  console.log("table length: ", table.toString().length);
+  console.log(table.toString());
+  console.log(table.toString().length);
   return `\`\`\`\n${table.toString()}\n\`\`\``;
 };
 
