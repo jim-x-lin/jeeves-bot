@@ -5,7 +5,6 @@ module.exports = {
   name: "interactionCreate",
   once: false,
   async execute(interaction) {
-    // TODO: handle non-command interactions
     if (!interaction.isCommand()) return;
     const command = interaction.client.commands.get(interaction.commandName);
     if (!command) return;

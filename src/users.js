@@ -4,6 +4,7 @@ const { ECONOMY, USER } = require("./constants");
 
 (async () => await redisClient.connect())();
 
+// prevent saving falsy values to redis
 const stringifyValues = (obj) =>
   Object.keys(obj).reduce((newObj, key) => {
     newObj[key] = obj[key] || "";
