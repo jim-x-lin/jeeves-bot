@@ -25,10 +25,7 @@ const update = async () => {
 
   const guild = client.guilds.cache.get(DiscordConfig.guildId);
   const members = await guild.members.list({ limit: 1000 });
-  console.log(
-    `Found ${members.size} members:\n`,
-    members.map((member) => member.displayName).join("\n")
-  );
+  console.log(`Found ${members.size} members`);
 
   await populateDatabase(members)
     .then(() => {
