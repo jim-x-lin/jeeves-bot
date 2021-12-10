@@ -1,5 +1,7 @@
 Discord bot using the [discord.js](https://github.com/discordjs/discord.js) library.
 
+This lightweight bot is designed to work with a single Discord, and be hosted locally or on a small EC2 instance/
+
 # TODO
 
 - [ ] (M) set up log rotation
