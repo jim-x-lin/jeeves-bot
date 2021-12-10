@@ -33,6 +33,7 @@ const genshinMessage = () => {
 };
 
 const replyMessage = (member, idType, gameId) => {
+  if (!gameId) return `${member} has not shared their ${idType} id`;
   const urlMessage = {
     steam: steamMessage,
     riot: riotMessage,
