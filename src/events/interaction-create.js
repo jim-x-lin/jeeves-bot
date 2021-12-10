@@ -5,10 +5,10 @@ const respondToCommand = async (interaction) => {
   const command = interaction.client.commands.get(interaction.commandName);
   if (!command) return;
   try {
-    logger.info(`Responding to command: ${command.name}`);
+    logger.info(`Responding to command: ${command.data.name}`);
     await command.execute(interaction);
   } catch (err) {
-    logger.error(err.stack, `Error executing command: ${command.name}`);
+    logger.error(err.stack, `Error executing command: ${command.data.name}`);
     return interaction.reply({
       content: "There was an error while executing this command!",
       ephemeral: true,
