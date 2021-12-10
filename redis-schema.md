@@ -8,7 +8,6 @@ The structure for storing user data is as follows, based on [this guide](https:/
     "abcd1234": "1",
     "defg5678": "2",
     ...
-    "hijk9012": "50"
   },
   "next_user_id": "51",
   "user:1": {
@@ -20,27 +19,12 @@ The structure for storing user data is as follows, based on [this guide](https:/
     joined_at: "1519211001056",
     last_seen_at: "1519211241511",
     last_seen_in: "channel a",
+    steam_id: "my_steam_id",
+    riot_id: "my_riot_id#me",
+    genshin_impact_id: "123456789"
   },
   "user:2": {
     discord_id: "defg5678",
-    updated_at: "1519211217538",
-    nickname: "brian bardum",
-    initials: "BB",
-    balance: "10000",
-    joined_at: "1519210902156",
-    last_seen_at: "1519211241971",
-    last_seen_in: "channel a",
-  },
   ...
-  "user:50": {
-    discord_id: "hijk9012",
-    updated_at: "1519211863492",
-    nickname: "caleb cassowary",
-    initials: "CC"
-    balance: "10000",
-    joined_at: "1519211002156",
-    last_seen_at: "1519211212252",
-    last_seen_in: "channel b",
-  }
 }
 ```
