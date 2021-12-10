@@ -1,58 +1,38 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { getUser } = require("../users");
-const { USER } = require("../constants");
+const { NAME, DESCRIPTION, SUBCOMMANDS, USER_ATTRIBUTE_MAP } =
+  require("../constants").COMMANDS.VIEW_ID;
 
 const getId = async (idType, discordId) => {
-  const userAttribute = {
-    steam: USER.ATTRIBUTES.STEAM_ID,
-    riot: USER.ATTRIBUTES.RIOT_ID,
-    genshin: USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
-  }[idType];
+  const userAttribute = USER_ATTRIBUTE_MAP[idType];
   return getUser(discordId)[userAttribute];
 };
 
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("view-id")
-    .setDescription("View a game id of a server member")
-    .addSubcommand((subcommand) =>
+const buildSlashCommand = () => {
+  const command = new SlashCommandBuilder()
+    .setName(NAME)
+    .setDescription(DESCRIPTION);
+  Object.values(SUBCOMMANDS).forEach((subc) => {
+    command.addSubcommand((subcommand) =>
       subcommand
-        .setName("steam")
-        .setDescription("view Steam ID")
+        .setName(subc.NAME)
+        .setDescription(subc.DESCRIPTION)
         .addUserOption((option) =>
           option
             .setRequired(true)
-            .setName("member")
-            .setDescription("Select a member")
+            .setName(subc.OPTION_NAME)
+            .setDescription(subc.OPTION_DESCRIPTION)
         )
-    )
+    );
+  });
+  return command;
+};
 
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("riot")
-        .setDescription("view Riot ID")
-        .addStringOption((option) =>
-          option
-            .setRequired(true)
-            .setName("member")
-            .setDescription("Select a member")
-        )
-    )
-
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("genshin")
-        .setDescription("view Genshin Impact ID")
-        .addStringOption((option) =>
-          option
-            .setRequired(true)
-            .setName("member")
-            .setDescription("Select a member")
-        )
-    ),
+module.exports = {
+  data: buildSlashCommand(),
   async execute(interaction) {
     const idType = interaction.options.getSubcommand();
-    const user = interaction.options.getUser("member");
+    const user = interaction.options.getUser(SUBCOMMANDS[0].OPTION_NAME);
     const id = await getId(idType, user.id);
     const message = id
       ? `The ${idType} id for ${user.username} is \`${id}\``
