@@ -1,4 +1,3 @@
-const { logger } = require("../logger");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { getAllUsers } = require("../users");
 const AsciiTable = require("ascii-table");
@@ -118,13 +117,7 @@ module.exports = {
       interaction.client,
       interaction.options.getString("view")
     );
-    await interaction
-      .reply({ content: table1, ephemeral: true })
-      .then(() => logger.info("Replied to command: members"))
-      .catch((err) => logger.error(err.stack, "Error running command"));
-    await interaction
-      .followUp({ content: table2, ephemeral: true })
-      .then(() => logger.info("Followed up to command: members"))
-      .catch((err) => logger.error(err.stack, "Error running command"));
+    await interaction.reply({ content: table1, ephemeral: true });
+    await interaction.followUp({ content: table2, ephemeral: true });
   },
 };

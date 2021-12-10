@@ -15,7 +15,8 @@ const getUserId = async (discordId) => {
   return redisClient.hGet("users", discordId);
 };
 
-const getUser = async (userId) => {
+const getUser = async (discordId) => {
+  const userId = await redisClient.hGet("users", discordId);
   return redisClient.hGetAll(`user:${userId}`);
 };
 
