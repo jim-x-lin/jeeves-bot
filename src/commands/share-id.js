@@ -10,7 +10,7 @@ const {
 
 const validId = (idType, gameId) => {
   if (idType === "steam" && /\d{17}/.test(gameId)) return true;
-  if (idType === "riot" && /^.+#\w\d+$/.test(gameId)) return true;
+  if (idType === "riot" && /^.+#[\w\d]+$/.test(gameId)) return true;
   if (idType === "genshin" && /\d{9}/.test(gameId)) return true;
   return false;
 };
@@ -52,7 +52,7 @@ module.exports = {
     const savedId = await saveId(interaction.user.id, idType, gameId);
     const message = savedId
       ? `Successfully shared ${idType} id \`${savedId}\``
-      : `Failed to share ${idType} id, \`${gameId}\``;
+      : `Failed to share ${idType} id, \`${gameId}\` is not valid`;
     await interaction.reply({ content: message, ephemeral: true });
   },
 };
