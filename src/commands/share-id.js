@@ -53,7 +53,7 @@ module.exports = {
       interaction.options.getString("ID")
     );
     const message = saveId
-      ? `Successfully shared ${idType} id "${savedId}"`
+      ? `Successfully shared ${idType} id \`${savedId}\``
       : `Failed to share ${idType} id`;
     await interaction.reply({ content: message, ephemeral: true });
   },
