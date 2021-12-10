@@ -6,7 +6,7 @@ const {
   SUBCOMMANDS,
   MAP_USER_ATTRIBUTE,
   MAP_SUBCOMMANDS_NAME,
-} = require("../constants").COMMANDS.SHARE_ID;
+} = require("../constants").COMMANDS.SHARE;
 
 const validId = (idType, gameId) => {
   if (idType === "steam" && /\d{17}/.test(gameId)) return true;

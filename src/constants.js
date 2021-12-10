@@ -19,8 +19,8 @@ const USER = Object.freeze({
 });
 
 const COMMANDS = Object.freeze({
-  SHARE_ID: {
-    NAME: "share-id",
+  SHARE: {
+    NAME: "share",
     DESCRIPTION: "Share a game id with server members",
     SUBCOMMANDS: {
       STEAM: {
@@ -53,8 +53,8 @@ const COMMANDS = Object.freeze({
       genshin: USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
     },
   },
-  VIEW_ID: {
-    NAME: "view-id",
+  VIEW: {
+    NAME: "view",
     DESCRIPTION: "View a game id of a server member",
     SUBCOMMANDS: {
       STEAM: {

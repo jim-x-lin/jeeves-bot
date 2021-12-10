@@ -7,7 +7,7 @@ const {
   SUBCOMMANDS,
   MAP_USER_ATTRIBUTE,
   MAP_SUBCOMMANDS_NAME,
-} = require("../constants").COMMANDS.VIEW_ID;
+} = require("../constants").COMMANDS.VIEW;
 
 const getId = async (idType, discordId) => {
   const userAttribute = MAP_USER_ATTRIBUTE[idType];
