@@ -26,27 +26,31 @@ const COMMANDS = Object.freeze({
       STEAM: {
         NAME: "steam",
         DESCRIPTION: "Share Steam ID",
-        OPTION_NAME: "ID",
+        OPTION_NAME: "gameid",
         OPTION_DESCRIPTION: "Your Steam ID",
       },
       RIOT: {
         NAME: "riot",
         DESCRIPTION: "Share Riot ID",
-        OPTION_NAME: "ID",
+        OPTION_NAME: "game-id",
         OPTION_DESCRIPTION: "Your Riot ID",
       },
       GENSHIN: {
         NAME: "genshin",
         DESCRIPTION: "Share Genshin Impact ID",
-        OPTION_NAME: "ID",
+        OPTION_NAME: "game-id",
         OPTION_DESCRIPTION: "Your Genshin Impact ID",
       },
     },
-    USER_ATTRIBUTE_MAP: {
-      [COMMANDS.SHARE_ID.SUBCOMMANDS.STEAM.NAME]: USER.ATTRIBUTES.STEAM_ID,
-      [COMMANDS.SHARE_ID.SUBCOMMANDS.RIOT.NAME]: USER.ATTRIBUTES.RIOT_ID,
-      [COMMANDS.SHARE_ID.SUBCOMMANDS.GENSHIN.NAME]:
-        USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
+    MAP_SUBCOMMANDS_NAME: {
+      steam: "STEAM",
+      riot: "RIOT",
+      genshin: "GENSHIN",
+    },
+    MAP_USER_ATTRIBUTE: {
+      steam: USER.ATTRIBUTES.STEAM_ID,
+      riot: USER.ATTRIBUTES.RIOT_ID,
+      genshin: USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
     },
   },
   VIEW_ID: {
@@ -72,11 +76,15 @@ const COMMANDS = Object.freeze({
         OPTION_DESCRIPTION: "Select a member",
       },
     },
-    USER_ATTRIBUTE_MAP: {
-      [COMMANDS.VIEW_ID.SUBCOMMANDS.STEAM.NAME]: USER.ATTRIBUTES.STEAM_ID,
-      [COMMANDS.VIEW_ID.SUBCOMMANDS.RIOT.NAME]: USER.ATTRIBUTES.RIOT_ID,
-      [COMMANDS.VIEW_ID.SUBCOMMANDS.GENSHIN.NAME]:
-        USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
+    MAP_SUBCOMMANDS_NAME: {
+      steam: "STEAM",
+      riot: "RIOT",
+      genshin: "GENSHIN",
+    },
+    MAP_USER_ATTRIBUTE: {
+      steam: USER.ATTRIBUTES.STEAM_ID,
+      riot: USER.ATTRIBUTES.RIOT_ID,
+      genshin: USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
     },
   },
 });

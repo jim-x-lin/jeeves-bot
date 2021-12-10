@@ -1,13 +1,26 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { getUser, updateUser } = require("../users");
-const { NAME, DESCRIPTION, SUBCOMMANDS, USER_ATTRIBUTE_MAP } =
-  require("../constants").COMMANDS.SHARE_ID;
+const {
+  NAME,
+  DESCRIPTION,
+  SUBCOMMANDS,
+  MAP_USER_ATTRIBUTE,
+  MAP_SUBCOMMANDS_NAME,
+} = require("../constants").COMMANDS.SHARE_ID;
 
-const saveId = async (discordId, idType, id) => {
-  if (id.length < 6 || id.length > 32) return;
-  const userAttribute = USER_ATTRIBUTE_MAP[idType];
-  await updateUser(discordId, { [userAttribute]: id });
-  return getUser(discordId)[userAttribute];
+const validId = (idType, gameId) => {
+  if (idType === "steam" && /\d{17}/.test(gameId)) return true;
+  if (idType === "riot" && /^.+#\w\d+$/.test(gameId)) return true;
+  if (idType === "genshin" && /\d{9}/.test(gameId)) return true;
+  return false;
+};
+
+const saveId = async (discordId, idType, gameId) => {
+  if (!validId(idType, gameId)) return;
+  const userAttribute = MAP_USER_ATTRIBUTE[idType];
+  await updateUser(discordId, { [userAttribute]: gameId });
+  const user = await getUser(discordId);
+  return user[userAttribute];
 };
 
 const buildSlashCommand = () => {
@@ -34,11 +47,12 @@ module.exports = {
   data: buildSlashCommand(),
   async execute(interaction) {
     const idType = interaction.options.getSubcommand();
-    const id = interaction.options.getString(SUBCOMMANDS[0].OPTION_NAME);
-    const savedId = await saveId(interaction.user.id, idType, id);
-    const message = saveId
+    const subcommand = SUBCOMMANDS[MAP_SUBCOMMANDS_NAME[idType]];
+    const gameId = interaction.options.getString(subcommand.OPTION_NAME);
+    const savedId = await saveId(interaction.user.id, idType, gameId);
+    const message = savedId
       ? `Successfully shared ${idType} id \`${savedId}\``
-      : `Failed to share ${idType} id`;
+      : `Failed to share ${idType} id, \`${gameId}\``;
     await interaction.reply({ content: message, ephemeral: true });
   },
 };
