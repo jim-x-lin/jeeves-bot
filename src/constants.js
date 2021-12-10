@@ -26,7 +26,7 @@ const COMMANDS = Object.freeze({
       STEAM: {
         NAME: "steam",
         DESCRIPTION: "Share Steam ID",
-        OPTION_NAME: "gameid",
+        OPTION_NAME: "game-id",
         OPTION_DESCRIPTION: "Your Steam ID",
       },
       RIOT: {
