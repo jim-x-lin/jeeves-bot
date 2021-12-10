@@ -28,7 +28,7 @@ tar xvzf redis-stable.tar.gz
 cd redis-stable
 make
 
-echo "Copying to binaries to /usr/local/bin/"
+echo "Copying binaries to /usr/local/bin/"
 cp src/redis-server /usr/local/bin/
 cp src/redis-cli /usr/local/bin/
 

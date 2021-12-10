@@ -8,7 +8,9 @@
     "format": "npx prettier --write .",
     "lint": "npx eslint --fix .",
     "test": "npx jest",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "deploy-commands": "node src/scripts/deploy-commands.js",
+    "update-database": "node src/scripts/update-database.js"
   },
   "author": "Jamal Lamar",
   "license": "ISC",

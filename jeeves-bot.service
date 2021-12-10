@@ -1,0 +1,11 @@
+[Unit]
+Description=jeeves-bot
+
+[Service]
+User=ubuntu
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node /home/ubuntu/jeeves-bot/src/index.js
+WorkingDirectory=/home/ubuntu/jeeves-bot
+
+[Install]
+WantedBy=multi-user.target
