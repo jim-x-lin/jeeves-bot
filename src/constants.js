@@ -18,7 +18,71 @@ const USER = Object.freeze({
   },
 });
 
+const COMMANDS = Object.freeze({
+  SHARE_ID: {
+    NAME: "share-id",
+    DESCRIPTION: "Share a game id with server members",
+    SUBCOMMANDS: {
+      STEAM: {
+        NAME: "steam",
+        DESCRIPTION: "Share Steam ID",
+        OPTION_NAME: "ID",
+        OPTION_DESCRIPTION: "Your Steam ID",
+      },
+      RIOT: {
+        NAME: "riot",
+        DESCRIPTION: "Share Riot ID",
+        OPTION_NAME: "ID",
+        OPTION_DESCRIPTION: "Your Riot ID",
+      },
+      GENSHIN: {
+        NAME: "genshin",
+        DESCRIPTION: "Share Genshin Impact ID",
+        OPTION_NAME: "ID",
+        OPTION_DESCRIPTION: "Your Genshin Impact ID",
+      },
+    },
+    USER_ATTRIBUTE_MAP: {
+      [COMMANDS.SHARE_ID.SUBCOMMANDS.STEAM.NAME]: USER.ATTRIBUTES.STEAM_ID,
+      [COMMANDS.SHARE_ID.SUBCOMMANDS.RIOT.NAME]: USER.ATTRIBUTES.RIOT_ID,
+      [COMMANDS.SHARE_ID.SUBCOMMANDS.GENSHIN.NAME]:
+        USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
+    },
+  },
+  VIEW_ID: {
+    NAME: "view-id",
+    DESCRIPTION: "View a game id of a server member",
+    SUBCOMMANDS: {
+      STEAM: {
+        NAME: "steam",
+        DESCRIPTION: "View Steam ID",
+        OPTION_NAME: "member",
+        OPTION_DESCRIPTION: "Select a member",
+      },
+      RIOT: {
+        NAME: "riot",
+        DESCRIPTION: "View Riot ID",
+        OPTION_NAME: "member",
+        OPTION_DESCRIPTION: "Select a member",
+      },
+      GENSHIN: {
+        NAME: "genshin",
+        DESCRIPTION: "View Genshin Impact ID",
+        OPTION_NAME: "member",
+        OPTION_DESCRIPTION: "Select a member",
+      },
+    },
+    USER_ATTRIBUTE_MAP: {
+      [COMMANDS.VIEW_ID.SUBCOMMANDS.STEAM.NAME]: USER.ATTRIBUTES.STEAM_ID,
+      [COMMANDS.VIEW_ID.SUBCOMMANDS.RIOT.NAME]: USER.ATTRIBUTES.RIOT_ID,
+      [COMMANDS.VIEW_ID.SUBCOMMANDS.GENSHIN.NAME]:
+        USER.ATTRIBUTES.GENSHIN_IMPACT_ID,
+    },
+  },
+});
+
 module.exports = {
   ECONOMY,
   USER,
+  COMMANDS,
 };
