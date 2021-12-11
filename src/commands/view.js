@@ -15,21 +15,44 @@ const getId = async (idType, discordId) => {
   return user[userAttribute];
 };
 
-const steamMessage = (steamId) => {
+const steamMessage = (steamId, own = false) => {
   let sid = new SteamID(steamId);
   const url = `https://www.dotabuff.com/players/${sid.accountid}`;
-  return `You can view their Dota 2 profile here: ${url}`;
+  return `You can view ${own ? "your" : "their"} Dota 2 profile here: ${url}`;
 };
 
-const riotMessage = (riotId) => {
+const riotMessage = (riotId, own = false) => {
   const id = encodeURIComponent(riotId.split("#")[0]);
   const tagline = riotId.split("#")[1];
   const url = `https://app.mobalytics.gg/valorant/profile/${id}/${tagline}/overview`;
-  return `You can view their Valorant profile here: ${url}`;
+  return `You can view ${own ? "your" : "their"} Valorant profile here: ${url}`;
 };
 
 const genshinMessage = () => {
-  return ""; // `You can view their profile here: ${genshinId}`
+  return ""; // `You can view ${own ? 'your' : 'their'} profile here: ${genshinId}`
+};
+
+const ownMessage = async (discordId) => {
+  let messageArray = [];
+  const steamId = await getId(SUBCOMMANDS.STEAM.NAME, discordId);
+  if (steamId) {
+    messageArray.push(
+      `Your steam id is \`${steamId}\`\n${steamMessage(steamId, true)}`
+    );
+  }
+  const riotId = await getId(SUBCOMMANDS.RIOT.NAME, discordId);
+  if (riotId) {
+    messageArray.push(
+      `Your riot id is \`${riotId}\`\n${riotMessage(riotId, true)}`
+    );
+  }
+  const genshinId = await getId(SUBCOMMANDS.GENSHIN.NAME, discordId);
+  if (genshinId) {
+    messageArray.push(
+      `Your genshin id is \`${genshinId}\`\n${genshinMessage(genshinId, true)}`
+    );
+  }
+  return messageArray.join("\n\n");
 };
 
 const replyMessage = (member, idType, gameId) => {
@@ -47,17 +70,19 @@ const buildSlashCommand = () => {
     .setName(NAME)
     .setDescription(DESCRIPTION);
   Object.values(SUBCOMMANDS).forEach((subc) => {
-    command.addSubcommand((subcommand) =>
-      subcommand
-        .setName(subc.NAME)
-        .setDescription(subc.DESCRIPTION)
-        .addUserOption((option) =>
-          option
-            .setRequired(true)
-            .setName(subc.OPTION_NAME)
-            .setDescription(subc.OPTION_DESCRIPTION)
-        )
-    );
+    command.addSubcommand((subcommand) => {
+      if (subc.OPTION_NAME)
+        return subcommand
+          .setName(subc.NAME)
+          .setDescription(subc.DESCRIPTION)
+          .addUserOption((option) =>
+            option
+              .setRequired(true)
+              .setName(subc.OPTION_NAME)
+              .setDescription(subc.OPTION_DESCRIPTION)
+          );
+      return subcommand.setName(subc.NAME).setDescription(subc.DESCRIPTION);
+    });
   });
   return command;
 };
@@ -67,10 +92,16 @@ module.exports = {
   async execute(interaction) {
     const idType = interaction.options.getSubcommand();
     const subcommand = SUBCOMMANDS[MAP_SUBCOMMANDS_NAME[idType]];
-    const member = interaction.options.getMember(subcommand.OPTION_NAME);
-    const gameId = await getId(idType, member.user.id);
+    let message = "";
+    if (subcommand.NAME === SUBCOMMANDS.ME.NAME) {
+      message = await ownMessage(interaction.user.id);
+    } else {
+      const member = interaction.options.getMember(subcommand.OPTION_NAME);
+      const gameId = await getId(idType, member.user.id);
+      message = replyMessage(member, idType, gameId);
+    }
     await interaction.reply({
-      content: replyMessage(member, idType, gameId),
+      content: message,
       ephemeral: true,
       suppressEmbeds: true,
     });
