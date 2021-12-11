@@ -75,11 +75,16 @@ const COMMANDS = Object.freeze({
         OPTION_NAME: "member",
         OPTION_DESCRIPTION: "Select a member",
       },
+      ME: {
+        NAME: "me",
+        DESCRIPTION: "View your own game ids",
+      },
     },
     MAP_SUBCOMMANDS_NAME: {
       steam: "STEAM",
       riot: "RIOT",
       genshin: "GENSHIN",
+      me: "ME",
     },
     MAP_USER_ATTRIBUTE: {
       steam: USER.ATTRIBUTES.STEAM_ID,
