@@ -52,6 +52,8 @@ const ownMessage = async (discordId) => {
       `Your genshin id is \`${genshinId}\`\n${genshinMessage(genshinId, true)}`
     );
   }
+  if (messageArray.length === 0)
+    return "You have not shared any game ids with the server.";
   return messageArray.join("\n\n");
 };
 
