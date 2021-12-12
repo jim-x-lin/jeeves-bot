@@ -1,20 +1,21 @@
 const { DiscordConfig } = require("../config");
 const { Client, Intents } = require("discord.js");
-const { getUserId, createUser, updateUser } = require("../users");
-const { USER } = require("../constants");
-const { getInitials } = require("../helpers");
+const { setUser } = require("../users");
+const { USER, ECONOMY } = require("../constants");
 
 const populateDatabase = async (members) => {
   for (const member of members) {
-    const discordId = member[0];
-    const nickname = member[1].nickname;
-    const joinedAt = member[1].joinedTimestamp;
-    const userId = await getUserId(discordId);
-    if (!userId) await createUser(discordId);
-    await updateUser(discordId, {
-      [USER.ATTRIBUTES.NICKNAME]: nickname,
-      [USER.ATTRIBUTES.INITIALS]: getInitials(nickname),
-      [USER.ATTRIBUTES.JOINED_AT]: joinedAt,
+    const userId = member[0];
+    const guildId = member[1].guild.id;
+    // const user = await getUser(guildId, userId);
+    // if (!user) {
+    await setUser(guildId, userId, {
+      [USER.ATTRIBUTES.GUILD_ID]: guildId,
+      [USER.ATTRIBUTES.USER_ID]: userId,
+      [USER.ATTRIBUTES.NICKNAME]: member[1].nickname,
+      [USER.ATTRIBUTES.JOINED_AT]: member[1].joinedTimestamp,
+      [USER.ATTRIBUTES.BALANCE]: ECONOMY.NEW_MEMBER_BALANCE,
+      [USER.ATTRIBUTES.UPDATED_AT]: Date.now(),
     });
   }
 };

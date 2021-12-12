@@ -8,7 +8,8 @@ const ECONOMY = Object.freeze({
 
 const USER = Object.freeze({
   ATTRIBUTES: {
-    DISCORD_ID: "discord_id",
+    GUILD_ID: "guild_id",
+    USER_ID: "user_id",
     UPDATED_AT: "updated_at",
     NICKNAME: "nickname",
     INITIALS: "initials",
@@ -16,6 +17,10 @@ const USER = Object.freeze({
     JOINED_AT: "joined_at",
     LAST_SEEN_AT: "last_seen_on",
     LAST_SEEN_IN: "last_seen_in",
+    LAST_JOINED_VOICE_AT: "last_joined_voice_at",
+    VOICE_TIME: "voice_time",
+    MESSAGE_COUNT: "message_count",
+    MESSAGE_REACTION_COUNT: "message_reaction_count",
     STEAM_ID: "steam_id",
     RIOT_ID: "riot_id",
     GENSHIN_IMPACT_ID: "genshin_impact_id",
