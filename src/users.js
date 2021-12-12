@@ -11,21 +11,21 @@ const stringifyValues = (obj) =>
   }, {});
 
 const getUser = async (guildId, userId) => {
-  return await redisClient.hGetAll(`user:${guildId}::${userId}`);
+  const user = await redisClient.hGetAll(`user:${guildId}::${userId}`);
+  return Object.keys(user).length === 0 ? null : user;
 };
 
-const getAllUsers = async (guildId) => {
+const getGuildUsers = async (guildId) => {
   const scan = redisClient.scanIterator({
-    TYPE: "string",
+    TYPE: "hash",
     MATCH: `user:${guildId}::*`,
     COUNT: 100,
   });
   let users = [];
 
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
-  for await (const user of scan) {
-    // TODO: what is the actual value of `user`?
-    console.log(user);
+  for await (const userKey of scan) {
+    const user = await redisClient.hGetAll(userKey);
     users.push(user);
   }
   return users;
@@ -41,6 +41,6 @@ const setUser = async (guildId, userId, attributes = {}) => {
 
 module.exports = {
   getUser,
-  getAllUsers,
+  getGuildUsers,
   setUser,
 };

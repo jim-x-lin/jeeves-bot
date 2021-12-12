@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { getUser, updateUser } = require("../users");
+const { getUser, setUser } = require("../users");
 const {
   NAME,
   DESCRIPTION,
@@ -15,11 +15,11 @@ const validId = (idType, gameId) => {
   return false;
 };
 
-const saveId = async (discordId, idType, gameId) => {
+const saveId = async (guildId, userId, idType, gameId) => {
   if (!validId(idType, gameId)) return;
   const userAttribute = MAP_USER_ATTRIBUTE[idType];
-  await updateUser(discordId, { [userAttribute]: gameId });
-  const user = await getUser(discordId);
+  await setUser(guildId, userId, { [userAttribute]: gameId });
+  const user = await getUser(guildId, userId);
   return user[userAttribute];
 };
 
@@ -49,7 +49,12 @@ module.exports = {
     const idType = interaction.options.getSubcommand();
     const subcommand = SUBCOMMANDS[MAP_SUBCOMMANDS_NAME[idType]];
     const gameId = interaction.options.getString(subcommand.OPTION_NAME);
-    const savedId = await saveId(interaction.user.id, idType, gameId);
+    const savedId = await saveId(
+      interaction.guild.id,
+      interaction.user.id,
+      idType,
+      gameId
+    );
     const message = savedId
       ? `Successfully shared ${idType} id \`${savedId}\``
       : `Failed to share ${idType} id, \`${gameId}\` is not valid`;

@@ -9,9 +9,9 @@ const {
   MAP_SUBCOMMANDS_NAME,
 } = require("../constants").COMMANDS.VIEW;
 
-const getId = async (idType, discordId) => {
+const getId = async (idType, guildId, userId) => {
   const userAttribute = MAP_USER_ATTRIBUTE[idType];
-  const user = await getUser(discordId);
+  const user = await getUser(guildId, userId);
   return user[userAttribute];
 };
 
@@ -32,21 +32,21 @@ const genshinMessage = () => {
   return ""; // `You can view ${own ? 'your' : 'their'} profile here: ${genshinId}`
 };
 
-const ownMessage = async (discordId) => {
+const ownMessage = async (guildId, userId) => {
   let messageArray = [];
-  const steamId = await getId(SUBCOMMANDS.STEAM.NAME, discordId);
+  const steamId = await getId(SUBCOMMANDS.STEAM.NAME, guildId, userId);
   if (steamId) {
     messageArray.push(
       `Your steam id is \`${steamId}\`\n${steamMessage(steamId, true)}`
     );
   }
-  const riotId = await getId(SUBCOMMANDS.RIOT.NAME, discordId);
+  const riotId = await getId(SUBCOMMANDS.RIOT.NAME, guildId, userId);
   if (riotId) {
     messageArray.push(
       `Your riot id is \`${riotId}\`\n${riotMessage(riotId, true)}`
     );
   }
-  const genshinId = await getId(SUBCOMMANDS.GENSHIN.NAME, discordId);
+  const genshinId = await getId(SUBCOMMANDS.GENSHIN.NAME, guildId, userId);
   if (genshinId) {
     messageArray.push(
       `Your genshin id is \`${genshinId}\`\n${genshinMessage(genshinId, true)}`
@@ -96,10 +96,10 @@ module.exports = {
     const subcommand = SUBCOMMANDS[MAP_SUBCOMMANDS_NAME[idType]];
     let message = "";
     if (subcommand.NAME === SUBCOMMANDS.ME.NAME) {
-      message = await ownMessage(interaction.user.id);
+      message = await ownMessage(interaction.guild.id, interaction.user.id);
     } else {
       const member = interaction.options.getMember(subcommand.OPTION_NAME);
-      const gameId = await getId(idType, member.user.id);
+      const gameId = await getId(idType, member.guild.id, member.user.id);
       message = replyMessage(member, idType, gameId);
     }
     await interaction.reply({
