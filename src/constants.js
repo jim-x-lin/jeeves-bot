@@ -1,3 +1,7 @@
+const MISC = Object.freeze({
+  DISCORD_MESSAGE_MAX_LENGTH: 2000,
+});
+
 const ECONOMY = Object.freeze({
   NEW_MEMBER_BALANCE: 10000,
 });
@@ -95,6 +99,7 @@ const COMMANDS = Object.freeze({
 });
 
 module.exports = {
+  MISC,
   ECONOMY,
   USER,
   COMMANDS,

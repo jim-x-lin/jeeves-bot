@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { getAllUsers } = require("../users");
 const AsciiTable = require("ascii-table");
 const { DiscordConfig } = require("../config");
-const { USER } = require("../constants");
+const { MISC, USER } = require("../constants");
 const formatDistance = require("date-fns/formatDistance");
 
 const stringToDate = (str) => {
@@ -16,9 +16,7 @@ const stringToTimeAgo = (str) => {
   const ms = Number(str);
   if (!ms || ms === 0) return "";
   const date = new Date(ms);
-  const distanceString = formatDistance(date, new Date(), { addSuffix: true });
-  // reduce text to deal with 2000 character limit
-  return distanceString.replace(/^(less than )|(about )|(over )|(almost )/, "");
+  return formatDistance(date, new Date(), { addSuffix: true });
 };
 
 const sortedList = (members, users, sortMethod = "") => {
@@ -41,7 +39,6 @@ const sortedList = (members, users, sortMethod = "") => {
       lastSeenIn: user ? user[USER.ATTRIBUTES.LAST_SEEN_IN] : "",
     });
   });
-
   list.sort((rowA, rowB) => rowA.name.localeCompare(rowB.name, "en"));
   if (sortMethod === "new")
     list.sort((rowA, rowB) => rowB.joinDateSortable - rowA.joinDateSortable);
@@ -76,25 +73,27 @@ const createMembersTable = (list, viewMethod, heading = true) => {
   return table;
 };
 
+const paginateTable = (tableString) => {
+  const lines = tableString.split("\n");
+  // solve for n: lineLength * n + additionalCharsPerPage = maxMessageLength
+  const linesPerPage = Math.floor(
+    (MISC.DISCORD_MESSAGE_MAX_LENGTH - 16) / (lines[0].length + 1)
+  );
+  const pages = [];
+  while (lines.length > 0) {
+    pages.push(`\`\`\`\n${lines.splice(0, linesPerPage).join("\n")}\n\`\`\``);
+  }
+  return pages;
+};
+
 const createMembersTableMessages = async (client, viewMethod) => {
   const guild = client.guilds.cache.get(DiscordConfig.guildId);
   const members = await guild.members.list({ limit: 1000 });
   const users = await getAllUsers();
   const list = sortedList(members, users, viewMethod);
-  // using "pagination" to bypass 2000 character limit
-  const table1 = createMembersTable(
-    list.slice(0, Math.floor(list.length / 2)),
-    viewMethod
-  );
-  const table2 = createMembersTable(
-    list.slice(Math.floor(list.length / 2)),
-    viewMethod,
-    false
-  );
-  return [
-    `\`\`\`\n${table1.toString()}\n\`\`\``,
-    `\`\`\`\n${table2.toString()}\n\`\`\``,
-  ];
+  const table = createMembersTable(list, viewMethod);
+  const pages = paginateTable(table.toString());
+  return pages;
 };
 
 module.exports = {
@@ -113,11 +112,13 @@ module.exports = {
         ])
     ),
   async execute(interaction) {
-    const [table1, table2] = await createMembersTableMessages(
+    const pages = await createMembersTableMessages(
       interaction.client,
       interaction.options.getString("view")
     );
-    await interaction.reply({ content: table1, ephemeral: true });
-    await interaction.followUp({ content: table2, ephemeral: true });
+    await interaction.reply({ content: pages.shift(), ephemeral: true });
+    while (pages.length > 0) {
+      await interaction.followUp({ content: pages.shift(), ephemeral: true });
+    }
   },
 };
