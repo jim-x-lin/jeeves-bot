@@ -18,9 +18,10 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: "9" }).setToken(token);
 
-const commandRoute = guildId
-  ? Routes.applicationGuildCommands(clientId, guildId)
-  : Routes.applicationCommands(clientId);
+const commandRoute =
+  process.env.NODE_ENV !== "production" && guildId
+    ? Routes.applicationGuildCommands(clientId, guildId)
+    : Routes.applicationCommands(clientId);
 
 rest
   .put(commandRoute, { body: commands })
