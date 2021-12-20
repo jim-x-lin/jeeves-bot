@@ -39,8 +39,13 @@ const setUser = async (guildId, userId, attributes = {}) => {
   return await redisClient.hGetAll(`user:${guildId}::${userId}`);
 };
 
+const flushDatabase = async () => {
+  redisClient.flushDb();
+};
+
 module.exports = {
   getUser,
   getGuildUsers,
   setUser,
+  flushDatabase,
 };
