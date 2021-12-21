@@ -17,7 +17,13 @@ const DiscordConfig = {
   guildId: process.env.DISCORD_GUILD_ID || "",
 };
 
+const YahooConfig = {
+  appKey: process.env.YAHOO_APP_KEY || "",
+  appSecret: process.env.YAHOO_APP_SECRET || "",
+};
+
 module.exports = {
   DataConfig,
   DiscordConfig,
+  YahooConfig,
 };

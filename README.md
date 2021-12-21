@@ -1,6 +1,6 @@
 Discord bot using the [discord.js](https://github.com/discordjs/discord.js) library.
 
-This lightweight bot is designed to work with a single Discord server, and be hosted locally or on a small EC2 instance.
+This lightweight bot is designed to work with smaller Discord servers, and be hosted locally or on a small EC2 instance.
 
 # TODO
 
