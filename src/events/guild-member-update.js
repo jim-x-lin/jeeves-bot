@@ -10,7 +10,9 @@ const updateNickname = async (member) => {
 module.exports = {
   name: "guildMemberUpdate",
   once: false,
-  async execute(member) {
-    updateNickname(member);
+  /*eslint-disable no-unused-vars*/
+  async execute(oldMember, newMember) {
+    /*eslint-enable no-unused-vars*/
+    updateNickname(newMember);
   },
 };
