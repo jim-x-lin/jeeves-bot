@@ -25,6 +25,6 @@ module.exports = {
   once: false,
   async execute(messageReaction, user) {
     updateSighting(messageReaction, user.id);
-    updateMessageReactionCount(user.id);
+    updateMessageReactionCount(messageReaction, user.id);
   },
 };
