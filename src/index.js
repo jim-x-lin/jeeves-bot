@@ -59,10 +59,10 @@ for (const file of eventFiles) {
         }
       });
     } else {
-      client.on(event.name, (...args) => {
+      client.on(event.name, async (...args) => {
         logger.info(`Event detected: ${event.name}`);
         try {
-          event.execute(...args);
+          await event.execute(...args);
         } catch (err) {
           logger.error(err.stack, "Error executing event listener");
         }
