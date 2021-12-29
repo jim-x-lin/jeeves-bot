@@ -16,7 +16,7 @@ const updateMessageReactionCount = async (messageReaction, userId) => {
   const user = await getUser(message.guild.id, userId);
   setUser(message.guild.id, userId, {
     [USER.ATTRIBUTES.MESSAGE_REACTION_COUNT]:
-      user[USER.ATTRIBUTES.MESSAGE_REACTION_COUNT] + 1,
+      Number(user[USER.ATTRIBUTES.MESSAGE_REACTION_COUNT] || "") + 1,
   });
 };
 

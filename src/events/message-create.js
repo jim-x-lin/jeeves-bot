@@ -12,7 +12,8 @@ const updateSighting = (message) => {
 const updateMessageCount = async (message) => {
   const user = await getUser(message.guild.id, message.author.id);
   setUser(message.guild.id, user.id, {
-    [USER.ATTRIBUTES.MESSAGE_COUNT]: user[USER.ATTRIBUTES.MESSAGE_COUNT] + 1,
+    [USER.ATTRIBUTES.MESSAGE_COUNT]:
+      Number(user[USER.ATTRIBUTES.MESSAGE_COUNT] || "") + 1,
   });
 };
 
