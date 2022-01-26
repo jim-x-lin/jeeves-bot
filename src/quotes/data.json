@@ -40,20 +40,12 @@
     "from": "Albert Einstein"
   },
   {
-    "text": "Don't waste your life in doubts and fears: Spend yourself on the work before you, well assured that the right performance of this hour's duties will be the best preparation for the hours or ages that follow it.",
-    "from": "Ralph Waldo Emerson"
-  },
-  {
     "text": "Do not anticipate trouble or worry about what may never happen. Keep in the sunlight.",
     "from": "Benjamin Franklin"
   },
   {
     "text": "Take time to deliberate; but when the time for action arrives, stop thinking and go in.",
     "from": "Andrew Jackson"
-  },
-  {
-    "text": "Live in each season as it passes; breathe the air, drink the drink, taste the fruit, and resign yourself to the influences of each.",
-    "from": "Henry David Thoreau"
   },
   {
     "text": "A leader is a dealer in hope.",
@@ -146,10 +138,6 @@
   {
     "text": "The difference between a successful person and others is not a lack of strength, not a lack of knowledge, but rather a lack in will.",
     "from": "Vince Lombardi"
-  },
-  {
-    "text": "The secret of success is to know something nobody else knows.",
-    "from": "Aristotle Onassis"
   },
   {
     "text": "The surest way not to fail is to determine to succeed.",
@@ -281,10 +269,6 @@
     "from": "Robert Frost"
   },
   {
-    "text": "The greatest reward in becoming a millionaire is not the amount of money that you earn. It is the kind of person that you have to become to become a millionaire in the first place.",
-    "from": "Jim Rohn"
-  },
-  {
     "text": "After a certain point, money is meaningless. It ceases to be the goal. The game is what counts.",
     "from": "Aristotle"
   },
@@ -311,10 +295,6 @@
   {
     "text": "You should always stay hungry. Stay hungry, so you can eat.",
     "from": "Syed Balkhi"
-  },
-  {
-    "text": "I wasn't satisfied just to earn a good living. I was looking to make a statement.",
-    "from": "Donald Trump"
   },
   {
     "text": "Not a single person whose name is worth remembering lived a life of ease.",
@@ -373,10 +353,6 @@
     "from": "John Shedd"
   },
   {
-    "text": "If I find 10,000 ways something won't work, I haven't failed. I am not discouraged, because every wrong attempt discarded is often a step forward.",
-    "from": "Thomas Edison"
-  },
-  {
     "text": "The critical ingredient is getting off your butt and doing something.",
     "from": "Nolan Bushnell"
   },
@@ -425,10 +401,6 @@
     "from": "Bill Gates"
   },
   {
-    "text": "When everything seems to be going against you, remember that the airplane takes off against the wind, not with it.",
-    "from": "Henry Ford"
-  },
-  {
     "text": "Fail often so you can succeed sooner.",
     "from": "Tom Kelley"
   },
@@ -437,15 +409,11 @@
     "from": "Malcolm Forbes"
   },
   {
-    "text": "My number one piece of advice is: you should learn how to program.",
-    "from": "Mark Zuckerberg"
-  },
-  {
     "text": "The way to get started is to quit talking and begin doing.",
     "from": "Walt Disney"
   },
   {
-    "text": "You don’t learn to walk by following rules. You learn by doing and falling over.",
+    "text": "You don't learn to walk by following rules. You learn by doing and falling over.",
     "from": "Richard Branson"
   },
   {
@@ -457,7 +425,7 @@
     "from": "Bo Bennet"
   },
   {
-    "text": "One of the huge mistakes people make is that they try to force an interest on themselves. You don't choose your passions; your passions choose you.",
+    "text": "You don't choose your passions; your passions choose you.",
     "from": "Jeff Bezos"
   },
   {
@@ -511,5 +479,65 @@
   {
     "text": "Treat Customers like a royalty and live in their mind.",
     "from": "Anonymous"
+  },
+  {
+    "text": "Oh yeah!",
+    "from": "Kool-Aid Man"
+  },
+  {
+    "text": "If we can't live in peace, then let's die in peace.",
+    "from": "James Warren 'Jim' Jones"
+  },
+  {
+    "text": "You can do anything you set your mind to when you have vision, determination, and an endless supply of expendable labor.",
+    "from": "Justin Sewell"
+  },
+  {
+    "text": "People say nothing is impossible, but I do nothing every day.",
+    "from": "Winnie the Pooh"
+  },
+  {
+    "text": "It could be that your purpose in life is to serve as a warning to others.",
+    "from": "Ashleigh Brilliant"
+  },
+  {
+    "text": "Work sets you free.",
+    "from": "The Schutzstaffel"
+  },
+  {
+    "text": "Sometimes your best investments are the ones you don't make.",
+    "from": "Donald Trump"
+  },
+  {
+    "text": "In life you have to rely on the past, and that's called history.",
+    "from": "Donald Trump"
+  },
+  {
+    "text": "Show me someone with no ego and I'll show you a big loser.",
+    "from": "Donald Trump"
+  },
+  {
+    "text": "Imperfection is beauty, madness is genius and it's better to be absolutely ridiculous than absolutely boring.",
+    "from": "Marilyn Monroe"
+  },
+  {
+    "text": "What do you despise? By this are you truly known.",
+    "from": "Muad'Dib"
+  },
+  {
+    "text": "It is better to be hated for what you are than to be loved for what you are not.",
+    "from": "Andre Gide"
+  },
+  {
+    "text": "Do I not destroy my enemies when I make them my friends?",
+    "from": "Abraham Lincoln"
+  },
+  {
+    "text": "Appear weak when you are strong, and strong when you are weak.",
+    "from": "Sun Tzu"
+  },
+  {
+    "text": "Believe in yourself. You are braver than you think, more talented than you know, and capable of more than you imagine.",
+    "from": "Roy T. Bennet"
   }
 ]
