@@ -6,6 +6,7 @@ const { USER, ECONOMY } = require("../constants");
 const populateDatabase = async (members, reset = false) => {
   if (reset) await flushDatabase();
   for (const member of members) {
+    // https://discord.js.org/#/docs/discord.js/main/class/GuildMemberManager?scrollTo=list
     const userId = member[0];
     const guildId = member[1].guild.id;
     const user = await getUser(guildId, userId);

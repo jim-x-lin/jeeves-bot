@@ -50,6 +50,7 @@ for (const file of eventFiles) {
   const event = require(`${path.resolve(__dirname, "./events")}/${file}`);
   try {
     if (event.once) {
+      // cronjobs are initialized in the "ready" event
       client.once(event.name, (...args) => {
         logger.info(`Event detected: ${event.name}`);
         try {
