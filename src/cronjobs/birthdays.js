@@ -1,4 +1,3 @@
-// TODO WIP
 const CronJob = require("cron").CronJob;
 const { MessageEmbed } = require("discord.js");
 const { guildId } = require("../config").DiscordConfig;
@@ -31,11 +30,7 @@ const wishHappyBirthday = (channel, userId, nickname, imageUrl) => {
     .setDescription(birthdayMessage)
     .setImage(imageUrl);
 
-  try {
-    channel.send({ embeds: [birthdayEmbed] });
-  } catch (err) {
-    logger.error(err.stack, "Error executing cronjob function");
-  }
+  channel.send({ embeds: [birthdayEmbed] });
 };
 
 const chooseBirthdayEmoji = (emojis) => {
@@ -58,13 +53,18 @@ const createBirthdayCronjobs = async (client) => {
     const birthdate = new Date(user[USER.ATTRIBUTES.BIRTHDATE]);
     return new CronJob(
       `0 0 9 ${birthdate.getDate()} ${birthdate.Month() + 1} *`,
-      () =>
-        wishHappyBirthday(
-          channel,
-          user[USER.ATTRIBUTES.USER_ID],
-          user[USER.ATTRIBUTES.NICKNAME],
-          imageUrl
-        ),
+      () => {
+        try {
+          wishHappyBirthday(
+            channel,
+            user[USER.ATTRIBUTES.USER_ID],
+            user[USER.ATTRIBUTES.NICKNAME],
+            imageUrl
+          );
+        } catch (err) {
+          logger.error(err.stack, "Error wishing happy birthday");
+        }
+      },
       null,
       false,
       CRON_TIMEZONE
