@@ -46,13 +46,13 @@ const createBirthdayCronjobs = async (client) => {
   const emoji = chooseBirthdayEmoji(emojis);
   const imageUrl = emoji ? emojiImageUrl(emoji.id) : FALLBACK_IMAGE_URL;
   const usersWithBirthdays = users.filter((user) => {
-    validBirthdate(user[USER.ATTRIBUTES.BIRTHDATE]);
+    return validBirthdate(user[USER.ATTRIBUTES.BIRTHDATE]);
   });
 
   return usersWithBirthdays.map((user) => {
-    const birthdate = new Date(user[USER.ATTRIBUTES.BIRTHDATE]);
+    const birthdate = new Date(user[USER.ATTRIBUTES.BIRTHDATE] + "T12:00:00");
     return new CronJob(
-      `0 0 9 ${birthdate.getDate()} ${birthdate.Month() + 1} *`,
+      `0 0 9 ${birthdate.getDate()} ${birthdate.getMonth() + 1} *`,
       () => {
         try {
           wishHappyBirthday(
