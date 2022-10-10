@@ -24,6 +24,7 @@ const USER = Object.freeze({
     STEAM_ID: "steam_id",
     RIOT_ID: "riot_id",
     GENSHIN_IMPACT_ID: "genshin_impact_id",
+    BIRTHDATE: "birthdate",
   },
 });
 

@@ -1,7 +1,8 @@
+const { getRandomElement } = require("../helpers");
 const quoteArray = require("./data.json");
 
 const getQuote = () => {
-  const quote = quoteArray[Math.floor(Math.random() * quoteArray.length)];
+  const quote = getRandomElement(quoteArray);
   return {
     text: quote.text,
     author: quote.from,
