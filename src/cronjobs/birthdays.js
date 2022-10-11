@@ -52,7 +52,7 @@ const createBirthdayCronjobs = async (client) => {
   return usersWithBirthdays.map((user) => {
     const birthdate = new Date(user[USER.ATTRIBUTES.BIRTHDATE] + "T12:00:00");
     return new CronJob(
-      `0 0 9 ${birthdate.getDate()} ${birthdate.getMonth() + 1} *`,
+      `0 0 9 ${birthdate.getDate()} ${birthdate.getMonth()} *`,
       () => {
         try {
           wishHappyBirthday(
