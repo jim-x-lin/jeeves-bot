@@ -86,16 +86,16 @@ const buildSlashCommand = () => {
 module.exports = {
   data: buildSlashCommand(),
   async execute(interaction) {
+    await interaction.deferReply({ ephemeral: true });
     const playerName = interaction.options.getString("player");
     const player = await getNbaPlayer(playerName);
     if (player) {
-      interaction.reply({
+      interaction.editReply({
         embeds: [playerEmbed(player)],
-        ephemeral: true,
       });
     } else {
-      interaction.reply({
-        content: "Could not find a player by that name.",
+      interaction.editReply({
+        content: `Could not find a player named ${playerName}`,
         ephemeral: true,
       });
     }
