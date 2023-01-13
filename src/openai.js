@@ -13,7 +13,7 @@ const getShortAnswer = async (question) => {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: question,
-      temperature: 0,
+      temperature: 1,
       max_tokens: 64,
     });
     return completion.data.choices[0].text.trim();
