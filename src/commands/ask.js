@@ -6,7 +6,7 @@ const { getShortAnswer } = require("../openai");
 
 const MAX_QUESTION_LENGTH = 90;
 const MIN_QUESTION_LENGTH = 6;
-const LIMIT_MS = 5 * 60 * 1000;
+const LIMIT_MS = 2 * 60 * 1000;
 
 let openaiLastUse = Date.now();
 
