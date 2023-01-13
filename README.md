@@ -2,13 +2,6 @@ Discord bot using the [discord.js](https://github.com/discordjs/discord.js) libr
 
 This lightweight bot is designed to work with smaller Discord servers, and be hosted locally or on a small EC2 instance.
 
-# TODO
-
-- [ ] (M) set up log rotation
-- [ ] (M) write tests
-- [ ] (L) use typescript
-- [ ] (?) do something with the currency system
-
 # Set up for Production
 
 The installation scripts were tested on an EC2 instance running Ubuntu 20.04, the scripts may not work in other scenarios.

@@ -22,8 +22,13 @@ const YahooConfig = {
   appSecret: process.env.YAHOO_APP_SECRET || "",
 };
 
+const OpenaiConfig = {
+  apiKey: process.env.OPENAI_API_KEY || "",
+};
+
 module.exports = {
   DataConfig,
   DiscordConfig,
   YahooConfig,
+  OpenaiConfig,
 };
