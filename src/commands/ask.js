@@ -5,7 +5,7 @@ const intervalToDuration = require("date-fns/intervalToDuration");
 const { getShortAnswer } = require("../openai");
 
 const MAX_QUESTION_LENGTH = 90;
-const MIN_QUESTION_LENGTH = 6;
+const MIN_QUESTION_LENGTH = 8;
 const LIMIT_MS = 2 * 60 * 1000;
 
 let openaiLastUse = Date.now();
@@ -27,6 +27,7 @@ const invalidQuestion = (question) => {
   if (
     typeof question !== "string" ||
     question.length < MIN_QUESTION_LENGTH ||
+    question.split(/\s+/).length < 3 ||
     !question.endsWith("?")
   )
     return "Your question is not valid.";
