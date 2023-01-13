@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const formatDuration = require("date-fns/formatDuration");
