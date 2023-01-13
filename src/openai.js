@@ -8,6 +8,11 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+const addPunctuation = (answer) => {
+  if (/[A-Za-z0-9]/.test(answer.slice(-1))) return `${answer}...`;
+  return answer;
+};
+
 const getShortAnswer = async (question) => {
   try {
     const completion = await openai.createCompletion({
@@ -16,7 +21,7 @@ const getShortAnswer = async (question) => {
       temperature: 1,
       max_tokens: 64,
     });
-    return completion.data.choices[0].text.trim();
+    return addPunctuation(completion.data.choices[0].text.trim());
   } catch (err) {
     if (err.response) {
       logger.error(err.response, "Openai error");
