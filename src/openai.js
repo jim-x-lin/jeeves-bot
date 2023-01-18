@@ -9,7 +9,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const addPunctuation = (answer) => {
-  if (/[^\.\!\?]/.test(answer.slice(-1))) return `${answer}...`;
+  if (/[^\.\!\?"]$/.test(answer)) return `${answer}...`;
   return answer;
 };
 
